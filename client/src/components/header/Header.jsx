@@ -25,7 +25,7 @@ const Header = () => {
             className="rounded-full max-w-[800px]"
           />
         </div>
-        <div className="menu-links flex justify-between items-center gap-7 md:static fixed bottom-0 md:w-auto w-screen md:bg-transparent bg-white left-0 md:border-t-0 border-t md:px-0 px-4 py-1">
+        <div className="menu-links flex justify-between items-center gap-7 md:static fixed z-50 bottom-0 md:w-auto w-screen md:bg-transparent bg-white left-0 md:border-t-0 border-t md:px-0 px-4 py-1">
           <a
             href={"/"}
             className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"

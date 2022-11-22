@@ -32,7 +32,7 @@ const CartTotals = () => {
               className="w-full flex items-center justify-center !rounded-full"
               icon={<PlusCircleOutlined />}
             />
-            <span className="">1</span>
+            <span className="font-bold">1</span>
             <Button
               type="primary"
               size="small"
@@ -60,7 +60,7 @@ const CartTotals = () => {
               className="w-full flex items-center justify-center !rounded-full"
               icon={<PlusCircleOutlined />}
             />
-            <span className="">1</span>
+            <span className="font-bold">1</span>
             <Button
               type="primary"
               size="small"
@@ -88,7 +88,7 @@ const CartTotals = () => {
               className="w-full flex items-center justify-center !rounded-full"
               icon={<PlusCircleOutlined />}
             />
-            <span className="">1</span>
+            <span className="font-bold">1</span>
             <Button
               type="primary"
               size="small"
@@ -116,7 +116,7 @@ const CartTotals = () => {
               className="w-full flex items-center justify-center !rounded-full"
               icon={<PlusCircleOutlined />}
             />
-            <span className="">1</span>
+            <span className="font-bold">1</span>
             <Button
               type="primary"
               size="small"
@@ -144,7 +144,7 @@ const CartTotals = () => {
               className="w-full flex items-center justify-center !rounded-full"
               icon={<PlusCircleOutlined />}
             />
-            <span className="">1</span>
+            <span className="font-bold">1</span>
             <Button
               type="primary"
               size="small"
