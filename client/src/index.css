@@ -10,15 +10,15 @@ body {
 }
 
 
-
+.ant-btn-primary {
+  background-color: #1677ff;
+}
 
 @media (min-width: 768px){
   body{
     overflow: hidden;
   }
-  .ant-btn-primary {
-    background-color: #1677ff;
-  }
+
   
   .categories::-webkit-scrollbar {
     display: none;
