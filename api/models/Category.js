@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const CategorySchema = mongoose.Schema(
   {
-    title: { tpye: String, require: true },
+    title: { type: String, require: true },
   },
   { timestamps: true }
 );
