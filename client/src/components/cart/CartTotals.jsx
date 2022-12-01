@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, message } from "antd";
 import {
   ClearOutlined,
   PlusCircleOutlined,
@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { deleteCart, increase, decrease } from "../../redux/cartSlice";
+import { deleteCart, increase, decrease, reset } from "../../redux/cartSlice";
 
 const CartTotals = () => {
   const cart = useSelector((state) => state.cart);
@@ -26,7 +26,10 @@ const CartTotals = () => {
                     src={item.img}
                     alt=""
                     className="w-16 h-16 object-cover cursor-pointer"
-                    onClick={() => dispatch(deleteCart(item))}
+                    onClick={() => {
+                      dispatch(deleteCart(item));
+                      message.success("Ürün Sepetten Silindi.");
+                    }}
                   />
                   <div className="flex flex-col ml-2">
                     <b>{item.title}</b>
@@ -43,7 +46,9 @@ const CartTotals = () => {
                     icon={<PlusCircleOutlined />}
                     onClick={() => dispatch(increase(item))}
                   />
-                  <span className="font-bold w-6 inline-block text-center">{item.quantity}</span>
+                  <span className="font-bold w-6 inline-block text-center">
+                    {item.quantity}
+                  </span>
                   <Button
                     type="primary"
                     size="small"
@@ -53,6 +58,7 @@ const CartTotals = () => {
                       if (item.quantity === 1) {
                         if (window.confirm("Ürün Silinsin Mi?")) {
                           dispatch(decrease(item));
+                          message.success("Ürün Sepetten Silindi.");
                         }
                       }
                       if (item.quantity > 1) {
@@ -93,7 +99,12 @@ const CartTotals = () => {
           </div>
         </div>
         <div className="py-4 px-2">
-          <Button type="primary" size="large" className="w-full">
+          <Button
+            type="primary"
+            size="large"
+            className="w-full"
+            disabled={cart.cartItems.length === 0}
+          >
             Sipariş Oluştur
           </Button>
           <Button
@@ -102,6 +113,13 @@ const CartTotals = () => {
             className="w-full mt-2 flex items-center justify-center"
             icon={<ClearOutlined />}
             danger
+            disabled={cart.cartItems.length === 0}
+            onClick={() => {
+              if (window.confirm("Emin Misiniz?")) {
+                dispatch(reset());
+                message.success("Sepet Başarıyla Temizlendi.");
+              }
+            }}
           >
             Temizle
           </Button>
