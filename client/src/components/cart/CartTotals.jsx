@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { deleteCart } from "../../redux/cartSlice";
+import { deleteCart, increase, decrease } from "../../redux/cartSlice";
 
 const CartTotals = () => {
   const cart = useSelector((state) => state.cart);
@@ -18,39 +18,52 @@ const CartTotals = () => {
         Sepetteki Ürünler
       </h2>
       <ul className="cart-items px-2 flex flex-col gap-y-3 py-2 overflow-y-auto">
-        {cart.cartItems.map((item) => (
-          <li className="cart-item flex justify-between" key={item._id}>
-            <div className="flex items-center">
-              <img
-                src={item.img}
-                alt=""
-                className="w-16 h-16 object-cover cursor-pointer"
-                onClick={() => dispatch(deleteCart(item))}
-              />
-              <div className="flex flex-col ml-2">
-                <b>{item.title}</b>
-                <span>
-                  {item.price}₺ x {item.quantity}
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center gap-x-1">
-              <Button
-                type="primary"
-                size="small"
-                className="w-full flex items-center justify-center !rounded-full"
-                icon={<PlusCircleOutlined />}
-              />
-              <span className="font-bold">{item.quantity}</span>
-              <Button
-                type="primary"
-                size="small"
-                className="w-full flex items-center justify-center !rounded-full"
-                icon={<MinusCircleOutlined />}
-              />
-            </div>
-          </li>
-        ))}
+        {cart.cartItems.length > 0
+          ? cart.cartItems.map((item) => (
+              <li className="cart-item flex justify-between" key={item._id}>
+                <div className="flex items-center">
+                  <img
+                    src={item.img}
+                    alt=""
+                    className="w-16 h-16 object-cover cursor-pointer"
+                    onClick={() => dispatch(deleteCart(item))}
+                  />
+                  <div className="flex flex-col ml-2">
+                    <b>{item.title}</b>
+                    <span>
+                      {item.price}₺ x {item.quantity}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <Button
+                    type="primary"
+                    size="small"
+                    className="w-full flex items-center justify-center !rounded-full"
+                    icon={<PlusCircleOutlined />}
+                    onClick={() => dispatch(increase(item))}
+                  />
+                  <span className="font-bold w-6 inline-block text-center">{item.quantity}</span>
+                  <Button
+                    type="primary"
+                    size="small"
+                    className="w-full flex items-center justify-center !rounded-full"
+                    icon={<MinusCircleOutlined />}
+                    onClick={() => {
+                      if (item.quantity === 1) {
+                        if (window.confirm("Ürün Silinsin Mi?")) {
+                          dispatch(decrease(item));
+                        }
+                      }
+                      if (item.quantity > 1) {
+                        dispatch(decrease(item));
+                      }
+                    }}
+                  />
+                </div>
+              </li>
+            ))
+          : "Sepette hiç ürün yok..."}
       </ul>
       <div className="cart-totals mt-auto">
         <div className="border-t border-b">
