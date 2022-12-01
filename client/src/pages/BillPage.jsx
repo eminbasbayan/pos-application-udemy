@@ -1,11 +1,12 @@
-import { Button,  Table } from "antd";
+import { Button, Table } from "antd";
 import { useEffect, useState } from "react";
 import PrintBill from "../components/bills/PrintBill.jsx";
 import Header from "../components/header/Header.jsx";
 
 const BillPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [billItems, setBillItems] = useState();
+  const [billItems, setBillItems] = useState([]);
+  const [customer, setCustomer] = useState();
 
   useEffect(() => {
     const getBills = async () => {
@@ -18,11 +19,8 @@ const BillPage = () => {
       }
     };
 
-    getBills()
+    getBills();
   }, []);
-
-  
-
 
   const columns = [
     {
@@ -39,9 +37,9 @@ const BillPage = () => {
       title: "Oluşturma Tarihi",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (text)=>{
-        return <span>{text.substring(0, 10)}</span>
-      }
+      render: (text) => {
+        return <span>{text.substring(0, 10)}</span>;
+      },
     },
     {
       title: "Ödeme Yöntemi",
@@ -52,17 +50,28 @@ const BillPage = () => {
       title: "Toplam Fiyat",
       dataIndex: "totalAmount",
       key: "totalAmount",
-      render: (text)=>{
-        return <span>{text}₺</span>
-      }
+      render: (text) => {
+        return <span>{text}₺</span>;
+      },
     },
     {
       title: "Actions",
       dataIndex: "action",
       key: "action",
-      render: (text)=>{
-        return <Button type="link" className="pl-0" onClick={()=> setIsModalOpen(true)}>Yazdır</Button>
-      }
+      render: (_, record) => {
+        return (
+          <Button
+            type="link"
+            className="pl-0"
+            onClick={() => {
+              setIsModalOpen(true);
+              setCustomer(record);
+            }}
+          >
+            Yazdır
+          </Button>
+        );
+      },
     },
   ];
 
@@ -78,7 +87,7 @@ const BillPage = () => {
           pagination={false}
         />
       </div>
-      <PrintBill isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <PrintBill isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} customer={customer} />
     </>
   );
 };
