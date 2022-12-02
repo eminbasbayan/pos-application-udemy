@@ -1,11 +1,11 @@
-import { Button, Input, Space, Table } from "antd";
+import { Button, Input, Space, Spin, Table } from "antd";
 import { useEffect, useRef, useState } from "react";
 import Header from "../components/header/Header.jsx";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 
 const CustomerPage = () => {
-  const [billItems, setBillItems] = useState([]);
+  const [billItems, setBillItems] = useState();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -164,20 +164,27 @@ const CustomerPage = () => {
   return (
     <>
       <Header />
-      <div className="px-6">
-        <h1 className="text-4xl font-bold text-center mb-4">Müşterilerim</h1>
-        <Table
-          dataSource={billItems}
-          columns={columns}
-          bordered
-          pagination={false}
-          scroll={{
-            x: 1000,
-            y: 300,
-          }}
-          rowKey="_id"
+      <h1 className="text-4xl font-bold text-center mb-4">Müşterilerim</h1>
+      {billItems ? (
+        <div className="px-6">
+          <Table
+            dataSource={billItems}
+            columns={columns}
+            bordered
+            pagination={false}
+            scroll={{
+              x: 1000,
+              y: 300,
+            }}
+            rowKey="_id"
+          />
+        </div>
+      ) : (
+        <Spin
+          size="large"
+          className="absolute top-1/2 h-screen w-screen flex justify-center"
         />
-      </div>
+      )}
     </>
   );
 };
