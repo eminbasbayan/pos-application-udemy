@@ -1,14 +1,38 @@
-import { Button, Carousel, Form, Input } from "antd";
+import { Button, Carousel, Form, Input, message } from "antd";
 import { Link } from "react-router-dom";
 import AuthCarousel from "../../components/auth/AuthCarousel";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const onFinish = async (values) => {
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      });
+      if (res.status === 200) {
+        message.success("Kayıt işlemi başarılı.");
+        navigate("/login");
+        setLoading(false);
+      }
+    } catch (error) {
+      message.error("Bir şeyler yanlış gitti.");
+      console.log(error);
+    }
+  };
+
   return (
     <div className="h-screen">
       <div className="flex justify-between h-full">
         <div className="xl:px-20 px-10 w-full flex flex-col h-full justify-center relative">
           <h1 className="text-center text-5xl font-bold mb-2">LOGO</h1>
-          <Form layout="vertical">
+          <Form layout="vertical" onFinish={onFinish}>
             <Form.Item
               label="Kullanıcı Adı"
               name={"username"}
@@ -60,9 +84,7 @@ const Register = () => {
                       return Promise.resolve();
                     }
                     return Promise.reject(
-                      new Error(
-                        "Şifreler Aynı Olmak Zorunda!"
-                      )
+                      new Error("Şifreler Aynı Olmak Zorunda!")
                     );
                   },
                 }),
@@ -76,6 +98,7 @@ const Register = () => {
                 htmlType="submit"
                 className="w-full"
                 size="large"
+                loading={loading}
               >
                 Kaydol
               </Button>
