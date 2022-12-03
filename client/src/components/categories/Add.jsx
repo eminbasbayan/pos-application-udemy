@@ -11,7 +11,7 @@ const Add = ({
 
   const onFinish = (values) => {
     try {
-      fetch("http://localhost:5000/api/categories/add-category", {
+      fetch(process.env.REACT_APP_SERVER_URL + "/api/categories/add-category", {
         method: "POST",
         body: JSON.stringify(values),
         headers: { "Content-type": "application/json; charset=UTF-8" },
